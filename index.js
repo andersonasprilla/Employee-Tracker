@@ -29,6 +29,15 @@ function viewAllRoles() {
     });
 }
 
+// Function to view all employees
+function viewAllEmployees() {
+    db.query('SELECT * FROM employee', (err, results) => {
+        if (err) throw err;
+        console.table(results);
+        init(); // Re-prompt the user
+    });
+}
+
 
 
 // Main function to initialize the application
