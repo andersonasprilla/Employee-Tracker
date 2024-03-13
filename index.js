@@ -20,6 +20,15 @@ function viewAllDepartments() {
     });
 }
 
+// Function to view all roles
+function viewAllRoles() {
+    db.query('SELECT * FROM role', (err, results) => {
+        if (err) throw err;
+        console.table(results);
+        init(); // Re-prompt the user
+    });
+}
+
 
 
 // Main function to initialize the application
