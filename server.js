@@ -24,6 +24,8 @@ db.query('SELECT * FROM department', function (err, results) {
     console.log(results);
   });
 
+
+
 // Default response for any other request (Not Found)
 app.use((req, res) => {
     res.status(404).end();
@@ -32,3 +34,6 @@ app.use((req, res) => {
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
   });
+
+
+  module.exports = db;
