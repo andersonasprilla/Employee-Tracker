@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Walkthrough video [Link](https://app.screencastify.com/v3/watch/7fkTZExkGC8u1dj17u9J)
+Walkthrough video [Link](https://app.screencastify.com/v2/manage/videos/CoQ36JKmG0PhIZS5GeIL)
 
 ## Description
 
