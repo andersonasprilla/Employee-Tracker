@@ -153,6 +153,41 @@ function addEmployee() {
     });
 }
 
+// Function to add a role
+function addRole() {
+    db.query('SELECT id, name FROM department', (err, departments) => {
+        if (err) throw err;
+
+        inquirer.prompt([
+            {
+                type: 'input',
+                name: 'title',
+                message: 'What is the title of the new role?',
+            },
+            {
+                type: 'input',
+                name: 'salary',
+                message: 'What is the salary of the new role?',
+            },
+            {
+                type: 'list',
+                name: 'departmentId',
+                message: 'Which department does the role belong to?',
+                choices: departments.map(dept => ({name: dept.name, value: dept.id})),
+            },
+        ]).then(answers => {
+            const { title, salary, departmentId } = answers;
+            db.query('INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)',
+                [title, salary, departmentId],
+                (err, result) => {
+                    if (err) throw err;
+                    console.log(`Added ${title} to roles`);
+                    init();
+                }
+            );
+        });
+    });
+}
 
 // Main function to initialize the application
 const init = () => {
@@ -175,7 +210,9 @@ const init = () => {
                 case 'Add Employee':
                     addEmployee();
                     break;
-
+                case 'Add Role':
+                    addRole();
+                    break;
             }
         });
 }
