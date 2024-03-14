@@ -1,5 +1,6 @@
 const inquirer = require('inquirer');
-const db = require('./server.js'); // Import the database connection
+const db = require('./server.js'); 
+const {Table} = require('console-table-printer');
 
 // Define the questions to ask the user using inquirer
 const questions = [
@@ -15,8 +16,14 @@ const questions = [
 function viewAllDepartments() {
     db.query('SELECT * FROM department', (err, results) => {
         if (err) throw err;
-        console.table(results);
-        init(); // Re-prompt the user
+        // Create a new table
+        const p = new Table();
+        results.forEach(row => {
+            p.addRow({ID: row.id, Name: row.name});
+        });
+        // Print the table
+        p.printTable();
+        init(); 
     });
 }
 
@@ -24,8 +31,12 @@ function viewAllDepartments() {
 function viewAllRoles() {
     db.query('SELECT * FROM role', (err, results) => {
         if (err) throw err;
-        console.table(results);
-        init(); // Re-prompt the user
+        const p = new Table();
+        results.forEach(row => {
+            p.addRow(row);
+        });
+        p.printTable();
+        init(); 
     });
 }
 
@@ -33,8 +44,12 @@ function viewAllRoles() {
 function viewAllEmployees() {
     db.query('SELECT * FROM employee', (err, results) => {
         if (err) throw err;
-        console.table(results);
-        init(); // Re-prompt the user
+        const p = new Table();     
+        results.forEach(row => {
+            p.addRow(row);
+        });
+        p.printTable();
+        init();
     });
 }
 
@@ -50,7 +65,7 @@ function addDepartment() {
         db.query('INSERT INTO department (name) VALUES (?)', [answer.deptName], (err, result) => {
             if (err) throw err;
             console.log(`Added ${answer.deptName} to departments`);
-            init(); // Re-prompt the user
+            init();
         });
     });
 }
@@ -73,7 +88,6 @@ const init = () => {
             case 'Add Department':
                 addDepartment();
                 break;
-            // Extend with additional cases here
         }
     });
 }
