@@ -189,6 +189,41 @@ function addRole() {
     });
 }
 
+// Function to update an employee's role
+function updateEmployeeRole() {
+    db.query('SELECT id, CONCAT(first_name, " ", last_name) AS name FROM employee', (err, employees) => {
+        if (err) throw err;
+        db.query('SELECT id, title FROM role', (err, roles) => {
+            if (err) throw err;
+            inquirer.prompt([
+                {
+                    type: 'list',
+                    name: 'employeeId',
+                    message: 'Which employee\'s role do you want to update?',
+                    choices: employees.map(employee => ({name: employee.name, value: employee.id})),
+                },
+                {
+                    type: 'list',
+                    name: 'roleId',
+                    message: 'Which role do you want to assign to the selected employee?',
+                    choices: roles.map(role => ({name: role.title, value: role.id})),
+                }
+            ]).then(answer => {
+                db.query(
+                    'UPDATE employee SET role_id = ? WHERE id = ?',
+                    [answer.roleId, answer.employeeId],
+                    (err, result) => {
+                        if (err) throw err;
+                        console.log(`Employee's role has been updated.`);
+                        init();
+                    }
+                );
+            });
+        });
+    });
+}
+
+
 // Main function to initialize the application
 const init = () => {
     inquirer
@@ -212,6 +247,9 @@ const init = () => {
                     break;
                 case 'Add Role':
                     addRole();
+                    break;
+                case 'Update Employee Role':
+                    updateEmployeeRole();
                     break;
             }
         });
