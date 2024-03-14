@@ -40,14 +40,14 @@ function viewAllRoles() {
         const p = new Table();
         results.forEach(row => {
             p.addRow({
-                ID: row.id, 
-                Title: row.title, 
-                Department: row.department, 
+                ID: row.id,
+                Title: row.title,
+                Department: row.department,
                 Salary: row.salary
             });
         });
         p.printTable();
-        init(); 
+        init();
     });
 }
 
@@ -77,13 +77,13 @@ function viewAllEmployees() {
         const p = new Table();
         results.forEach(row => {
             p.addRow({
-                ID: row.id, 
-                'First Name': row.first_name, 
-                'Last Name': row.last_name, 
-                Title: row.title, 
-                Department: row.department, 
-                Salary: row.salary, 
-                Manager: row.manager || 'None' 
+                ID: row.id,
+                'First Name': row.first_name,
+                'Last Name': row.last_name,
+                Title: row.title,
+                Department: row.department,
+                Salary: row.salary,
+                Manager: row.manager || 'None'
             });
         });
         p.printTable();
@@ -173,7 +173,7 @@ function addRole() {
                 type: 'list',
                 name: 'departmentId',
                 message: 'Which department does the role belong to?',
-                choices: departments.map(dept => ({name: dept.name, value: dept.id})),
+                choices: departments.map(dept => ({ name: dept.name, value: dept.id })),
             },
         ]).then(answers => {
             const { title, salary, departmentId } = answers;
@@ -200,13 +200,13 @@ function updateEmployeeRole() {
                     type: 'list',
                     name: 'employeeId',
                     message: 'Which employee\'s role do you want to update?',
-                    choices: employees.map(employee => ({name: employee.name, value: employee.id})),
+                    choices: employees.map(employee => ({ name: employee.name, value: employee.id })),
                 },
                 {
                     type: 'list',
                     name: 'roleId',
                     message: 'Which role do you want to assign to the selected employee?',
-                    choices: roles.map(role => ({name: role.title, value: role.id})),
+                    choices: roles.map(role => ({ name: role.title, value: role.id })),
                 }
             ]).then(answer => {
                 db.query(
